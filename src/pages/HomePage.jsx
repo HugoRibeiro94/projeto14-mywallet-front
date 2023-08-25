@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <HomeContainer>
       <Header>
-        <h1>Olá, {name}</h1>
+        <h1 data-test="user-name">Olá, {name}</h1>
         <BiExit />
       </Header>
 
@@ -45,14 +45,14 @@ export default function HomePage() {
 
       <ButtonsContainer>
 
-        <Link to="/nova-transacao/entrada">
+        <Link to="/nova-transacao/entrada" data-test="new-income">
           <button>
             <AiOutlinePlusCircle />
             <p>Nova <br /> entrada</p>
           </button>
         </Link>
 
-        <Link to="/nova-transacao/saida">
+        <Link to="/nova-transacao/saida" data-test="new-expense">
           <button>
             <AiOutlineMinusCircle />
             <p>Nova <br />saída</p>
