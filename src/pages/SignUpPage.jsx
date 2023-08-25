@@ -10,6 +10,7 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const {name, setName} = useContext(AuthorizationContext);
   const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [register, setRegister] = useState(null);
 
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ export default function SignUpPage() {
   function createUser(e){
     e.preventDefault();
 
+    if(newPassword !== password){
+      return alert ("senha não confirmada")
+    }
     const newRegister = {
       email: email,
       name: name,
@@ -72,8 +76,8 @@ export default function SignUpPage() {
           placeholder="Confirme a senha" 
           type="password" 
           autocomplete="new-password" 
-          onChange={ e => setPassword(e.target.value)}                
-          value={password}
+          onChange={ e => setNewPassword(e.target.value)}                
+          value={newPassword}
           required
         />
 

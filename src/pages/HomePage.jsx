@@ -1,20 +1,42 @@
 import styled from "styled-components"
 import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import AuthorizationContext from "../contexts/AuthorizationContext"
 import { useContext } from "react"
+import axios from "axios"
 
 export default function HomePage() {
 
   const {name, setName} = useContext(AuthorizationContext)
   console.log(name)
 
+  const {token} = useContext(AuthorizationContext)
+
+  const navigate = useNavigate();
+
+  function logout(){
+
+    const config = {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+    }
+
+    const promise = axios.delete(`${import.meta.env.VITE_API_URL}/sign-out`,config);
+    promise.then((res) => {
+      console.log(res.data)
+      navigate('/')
+    });
+    promise.catch( erro => { 
+      console.log(erro.response)});
+  }
+
   return (
     <HomeContainer>
       <Header>
         <h1 data-test="user-name">Olá, {name}</h1>
-        <BiExit />
+        <BiExit data-test="logout" onClick={logout}/>
       </Header>
 
       <TransactionsContainer>
