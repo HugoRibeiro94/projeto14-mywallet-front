@@ -27,6 +27,7 @@ export default function SignInPage() {
     promise.then((res) => { 
       console.log(res.data)
       setToken(res.data);
+      localStorage.setItem("token", res.data)
       navigate('/home');
     });
     promise.catch( erro => {

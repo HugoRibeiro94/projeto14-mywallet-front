@@ -15,6 +15,12 @@ export default function TransactionsPage() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!token){
+      navigate("/")
+    }
+  }, [])
+  
   function newTransaction(e){
     e.preventDefault()
 

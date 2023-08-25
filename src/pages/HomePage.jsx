@@ -3,7 +3,7 @@ import { BiExit } from "react-icons/bi"
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai"
 import { Link, useNavigate } from "react-router-dom"
 import AuthorizationContext from "../contexts/AuthorizationContext"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import axios from "axios"
 
 export default function HomePage() {
@@ -11,21 +11,29 @@ export default function HomePage() {
   const {name, setName} = useContext(AuthorizationContext)
   console.log(name)
 
-  const {token} = useContext(AuthorizationContext)
+  const {token, setToken} = useContext(AuthorizationContext)
 
   const navigate = useNavigate();
 
-  function logout(){
-
-    const config = {
-      headers: {
-          Authorization: `Bearer ${token}`
-      }
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
+  }
 
+  useEffect(() => {
+    if (!token){
+      navigate("/")
+    }
+  }, [])
+
+  function logout(){
+    
     const promise = axios.delete(`${import.meta.env.VITE_API_URL}/sign-out`,config);
     promise.then((res) => {
       console.log(res.data)
+      localStorage.removeItem("token")
+      setToken(undefined)
       navigate('/')
     });
     promise.catch( erro => { 
