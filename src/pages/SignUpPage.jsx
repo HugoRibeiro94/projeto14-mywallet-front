@@ -1,13 +1,14 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import MyWalletLogo from "../components/MyWalletLogo"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import AuthorizationContext from "../contexts/AuthorizationContext";
 
 export default function SignUpPage() {
 
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const {name, setName} = useContext(AuthorizationContext);
   const [password, setPassword] = useState("");
   const [register, setRegister] = useState(null);
 
@@ -79,7 +80,7 @@ export default function SignUpPage() {
         <button type="submit" data-test="sign-up-submit">Cadastrar</button>
       </form>
 
-      <Link>
+      <Link to="/">
         Já tem uma conta? Entre agora!
       </Link>
     </SingUpContainer>
