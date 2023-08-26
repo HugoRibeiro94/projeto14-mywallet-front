@@ -10,7 +10,8 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const {setToken} = useContext(AuthorizationContext)
+  const {name, setName} = useContext(AuthorizationContext);
+  const {setToken} = useContext(AuthorizationContext);
 
   const navigate = useNavigate();
 
@@ -26,8 +27,9 @@ export default function SignInPage() {
     const promise = axios.post(`${import.meta.env.VITE_API_URL}/sign-in`,login);
     promise.then((res) => { 
       console.log(res.data)
-      setToken(res.data);
-      localStorage.setItem("token", res.data)
+      setName(res.data.name)
+      setToken(res.data.token);
+      localStorage.setItem("token", res.data.token)
       navigate('/home');
     });
     promise.catch( erro => {

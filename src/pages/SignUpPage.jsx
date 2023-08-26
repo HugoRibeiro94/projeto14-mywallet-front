@@ -8,7 +8,7 @@ import AuthorizationContext from "../contexts/AuthorizationContext";
 export default function SignUpPage() {
 
   const [email, setEmail] = useState("");
-  const {name, setName} = useContext(AuthorizationContext);
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [register, setRegister] = useState(null);

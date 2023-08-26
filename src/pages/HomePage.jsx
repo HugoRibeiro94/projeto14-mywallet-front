@@ -9,7 +9,7 @@ import axios from "axios"
 export default function HomePage() {
 
   const {name, setName} = useContext(AuthorizationContext)
-  console.log(name)
+  //console.log(token)
 
   const {token, setToken} = useContext(AuthorizationContext)
 
