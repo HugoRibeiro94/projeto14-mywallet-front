@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import AuthorizationContext from "../contexts/AuthorizationContext";
 import axios from "axios";
+import { useEffect } from "react";
 
 export default function TransactionsPage() {
 

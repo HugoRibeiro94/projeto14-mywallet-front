@@ -25,6 +25,7 @@ export default function HomePage() {
     if (!token){
       navigate("/")
     }
+    
   }, [])
 
   function logout(){
