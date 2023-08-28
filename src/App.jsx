@@ -11,11 +11,12 @@ export default function App() {
 
   const [token, setToken] = useState(localStorage.getItem("token"))
   const [name, setName] = useState("")
+  const [arrayTransactions, setArrayTransactions] = useState([])
 
   return (
     <PagesContainer>
       <BrowserRouter>
-        <AuthorizationContext.Provider value={{token, setToken, name, setName}}>
+        <AuthorizationContext.Provider value={{token, setToken, name, setName, arrayTransactions, setArrayTransactions}}>
           <Routes>
             <Route path="/" element={<SignInPage />} />
             <Route path="/cadastro" element={<SignUpPage />} />

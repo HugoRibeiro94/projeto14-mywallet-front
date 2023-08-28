@@ -5,14 +5,13 @@ import { Link, useNavigate } from "react-router-dom"
 import AuthorizationContext from "../contexts/AuthorizationContext"
 import { useContext, useEffect } from "react"
 import axios from "axios"
+import dayjs from "dayjs"
+import Transactions from "../components/Transactions"
 
 export default function HomePage() {
-
-  const {name, setName} = useContext(AuthorizationContext)
-  //console.log(token)
-
-  const {token, setToken} = useContext(AuthorizationContext)
-
+  console.log(dayjs(Date.now()).format('DD/MM'));
+  const {token, setToken, name, setName, arrayTransactions, setArrayTransactions} = useContext(AuthorizationContext)
+ 
   const navigate = useNavigate();
 
   const config = {
@@ -25,7 +24,12 @@ export default function HomePage() {
     if (!token){
       navigate("/")
     }
-    
+    const promise = axios.get(`${import.meta.env.VITE_API_URL}/transactions`,config);
+        promise.then(resposta => {
+            console.log(resposta.data);
+            setArrayTransactions(resposta.data);
+        });
+        promise.catch( erro => console.log(erro) );
   }, [])
 
   function logout(){
@@ -41,6 +45,21 @@ export default function HomePage() {
       console.log(erro.response)});
   }
 
+  const arraySaidas = arrayTransactions.filter( saida => saida.tipo === "saida")
+  console.log(arraySaidas);
+
+  const arrayEntradas = arrayTransactions.filter( entrada => entrada.tipo === "entrada")
+  console.log(arrayEntradas);
+
+  const somaSaidas = arraySaidas.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
+  console.log(somaSaidas)
+
+  const somaEntradas = arrayEntradas.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
+  console.log(somaEntradas)
+
+  let soma = somaEntradas - somaSaidas
+
+  console.log(soma);
   return (
     <HomeContainer>
       <Header>
@@ -49,27 +68,21 @@ export default function HomePage() {
       </Header>
 
       <TransactionsContainer>
-        <ul>
-          <ListItemContainer>
-            <div>
-              <span>30/11</span>
-              <strong>Almoço mãe</strong>
-            </div>
-            <Value color={"negativo"}>120,00</Value>
-          </ListItemContainer>
-
-          <ListItemContainer>
-            <div>
-              <span>15/11</span>
-              <strong>Salário</strong>
-            </div>
-            <Value color={"positivo"}>3000,00</Value>
-          </ListItemContainer>
+        <ul>  
+          {arrayTransactions.map( (item) => 
+            <Transactions
+              key={item.id}
+              description={item.description}
+              value={item.value}
+              tipo={item.tipo}
+              date={item.date}
+            />
+          )}
+  
         </ul>
-
         <article>
           <strong>Saldo</strong>
-          <Value color={"positivo"}>2880,00</Value>
+          <Value color={soma >= 0 ? "positivo" : ""}>{soma}</Value>
         </article>
       </TransactionsContainer>
 
@@ -151,16 +164,4 @@ const Value = styled.div`
   font-size: 16px;
   text-align: right;
   color: ${(props) => (props.color === "positivo" ? "green" : "red")};
-`
-const ListItemContainer = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  color: #000000;
-  margin-right: 10px;
-  div span {
-    color: #c6c6c6;
-    margin-right: 10px;
-  }
 `

@@ -4,6 +4,7 @@ import styled from "styled-components"
 import AuthorizationContext from "../contexts/AuthorizationContext";
 import axios from "axios";
 import { useEffect } from "react";
+import dayjs from "dayjs";
 
 export default function TransactionsPage() {
 
@@ -12,27 +13,30 @@ export default function TransactionsPage() {
 
   const {tipo} = useParams();
 
-  const {token} = useContext(AuthorizationContext)
+  const {token, arrayTransactions, setArrayTransactions} = useContext(AuthorizationContext)
 
   const navigate = useNavigate();
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
 
   useEffect(() => {
     if (!token){
       navigate("/")
     }
+
   }, [])
   
   function newTransaction(e){
     e.preventDefault()
 
-    const config = {
-      headers: {
-          Authorization: `Bearer ${token}`
-      }
-    }
     const transaction = {
       value:value,
       description:description
+      
     }
     const promise = axios.post(`${import.meta.env.VITE_API_URL}/nova-transacao/${tipo}`,transaction,config);
     promise.then((res) => { 
