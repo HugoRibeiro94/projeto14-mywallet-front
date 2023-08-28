@@ -82,7 +82,7 @@ export default function HomePage() {
         </ul>
         <article>
           <strong>Saldo</strong>
-          <Value color={soma >= 0 ? "positivo" : ""}>{soma}</Value>
+          <Value data-test="total-amount" color={soma >= 0 ? "positivo" : ""}>{soma}</Value>
         </article>
       </TransactionsContainer>
 
