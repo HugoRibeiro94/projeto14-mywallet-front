@@ -9,7 +9,7 @@ import dayjs from "dayjs"
 import Transactions from "../components/Transactions"
 
 export default function HomePage() {
-  console.log(dayjs(Date.now()).format('DD/MM'));
+
   const {token, setToken, name, setName, arrayTransactions, setArrayTransactions} = useContext(AuthorizationContext)
  
   const navigate = useNavigate();
@@ -46,20 +46,15 @@ export default function HomePage() {
   }
 
   const arraySaidas = arrayTransactions.filter( saida => saida.tipo === "saida")
-  console.log(arraySaidas);
 
   const arrayEntradas = arrayTransactions.filter( entrada => entrada.tipo === "entrada")
-  console.log(arrayEntradas);
 
   const somaSaidas = arraySaidas.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
-  console.log(somaSaidas)
 
   const somaEntradas = arrayEntradas.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
-  console.log(somaEntradas)
 
   let soma = somaEntradas - somaSaidas
 
-  console.log(soma);
   return (
     <HomeContainer>
       <Header>
