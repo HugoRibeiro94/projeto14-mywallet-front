@@ -45,15 +45,15 @@ export default function HomePage() {
       console.log(erro.response)});
   }
 
-  const arraySaidas = arrayTransactions.filter( saida => saida.tipo === "saida")
+  const arrayExit = arrayTransactions.filter( saida => saida.tipo === "saida")
 
-  const arrayEntradas = arrayTransactions.filter( entrada => entrada.tipo === "entrada")
+  const arrayEnter = arrayTransactions.filter( entrada => entrada.tipo === "entrada")
 
-  const somaSaidas = arraySaidas.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
+  const sumExit = arrayExit.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
 
-  const somaEntradas = arrayEntradas.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
+  const sumEnter = arrayEnter.reduce( (acumulador,valorAtual,) => acumulador + Number(valorAtual.value), 0);
 
-  let soma = somaEntradas - somaSaidas
+  let sum = sumEntradas - sumExit
 
   return (
     <HomeContainer>
@@ -77,7 +77,7 @@ export default function HomePage() {
         </ul>
         <article>
           <strong>Saldo</strong>
-          <Value data-test="total-amount" color={soma >= 0 ? "positivo" : ""}>{soma}</Value>
+          <Value data-test="total-amount" color={sum >= 0 ? "positivo" : ""}>{sum}</Value>
         </article>
       </TransactionsContainer>
 

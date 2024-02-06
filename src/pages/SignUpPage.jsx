@@ -3,7 +3,6 @@ import styled from "styled-components"
 import MyWalletLogo from "../components/MyWalletLogo"
 import { useContext, useState } from "react";
 import axios from "axios";
-import AuthorizationContext from "../contexts/AuthorizationContext";
 
 export default function SignUpPage() {
 
@@ -11,7 +10,6 @@ export default function SignUpPage() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [register, setRegister] = useState(null);
 
   const navigate = useNavigate();
 
@@ -30,13 +28,11 @@ export default function SignUpPage() {
     console.log(newRegister)
   const promise = axios.post(`${import.meta.env.VITE_API_URL}/sign-up`,newRegister);
   promise.then((res) => {
-      console.log(res.data)
-      //setRegister(res.data);
-      navigate('/')
+    console.log(res.data)
+    navigate('/')
   });
   promise.catch( erro => { 
-      alert(erro.response)});
-
+    console.log(erro.response);});
   }
 
   return (
